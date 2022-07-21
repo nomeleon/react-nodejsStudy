@@ -14,14 +14,15 @@ import './MemberList.scss';
 // };
 ///////////////////////////////////////////////////////
 // const TodoList = ({ todos, onRemove, onToggle }) => {
-const MemberList = ({ members, onUpdate, onRemove }) => {
+const MemberList = ({ members, onGetMember, onRemove }) => {
+  // console.log(members);
   return (
     <div className="TodoList">
       {members.map((member) => (
         <MemberListItem
           member={member}
           key={member.no}
-          onUpdate={onUpdate}
+          onGetMember={onGetMember}
           onRemove={onRemove}
           // onToggle={onToggle}
         />

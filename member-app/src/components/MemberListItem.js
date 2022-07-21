@@ -23,7 +23,7 @@ import './MemberListItem.scss';
 // };
 //////////////////////////////////////////////////
 // const TodoListItem = ({ member, onRemove, onToggle }) => {
-const MemberListItem = ({ member, onRemove }) => {
+const MemberListItem = ({ member, onRemove, onGetMember }) => {
   const { no, id, pw, email, gender } = member;
 
   return (
@@ -42,8 +42,8 @@ const MemberListItem = ({ member, onRemove }) => {
         gender : {member.gender}
       </div>
       {/* </div> */}
-      <div className="update" onClick={() => onUpdate(no)}>
-        수정
+      <div className="update" onClick={() => onGetMember(no)}>
+        선택
       </div>
       <div className="remove" onClick={() => onRemove(no)}>
         <MdRemoveCircleOutline />

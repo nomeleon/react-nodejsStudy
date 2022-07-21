@@ -6,6 +6,7 @@ import MemberTemplate from './components/MemberTemplate';
 import MemberInsert from './components/MemberInsert';
 import MemberList from './components/MemberList';
 import { useCallback, useRef, useState } from 'react';
+import MemberUpdate from './components/MemberUpdate';
 
 const App = () => {
   const [members, setMembers] = useState([
@@ -17,7 +18,8 @@ const App = () => {
       gender: 'woman',
     },
   ]);
-
+  const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
   const nextNo = useRef(2);
 
   const onInsert = useCallback(
@@ -29,7 +31,7 @@ const App = () => {
         email: form.email,
         gender: form.gender,
       };
-      console.log(member);
+      // console.log(member);
       setMembers(members.concat(member));
       nextNo.current += 1;
     },
@@ -42,17 +44,56 @@ const App = () => {
     },
     [members],
   );
+  const [pickMember, setPickMember] = useState();
+  const onGetMember = (no) => {
+    //선택한 번호의 회원 정보를 pick
+    setPickMember(members.filter((member) => member.no === no));
+
+    // console.log('app.js pick member');
+    // console.log(pickMember);
+    // console.log(pickMember[0].id);
+  };
+
   const onUpdate = useCallback(
-    (no) => {
-      //선택한 번호의 회원 정보를 input에 띄워줌 > 수정한 정보로 저장
+    (member) => {
+      console.log(member);
+      //같은 번호의 members를 가져와서 member의 정보로 덮어씌우기
+      members[member.no - 1] = {
+        no: member.no,
+        id: member.id,
+        pw: member.pw,
+        email: member.email,
+        gender: member.gender,
+      };
+      console.log(members);
     },
     [members],
   );
 
   return (
     <MemberTemplate>
-      <MemberInsert onInsert={onInsert} />
-      <MemberList members={members} onUpdate={onUpdate} onRemove={onRemove} />
+      <button
+        onClick={() => {
+          setVisible(!visible);
+        }}
+      >
+        {visible ? '회원 추가 완료' : '회원 추가'}
+      </button>
+      <button
+        onClick={() => {
+          setVisible2(!visible2);
+        }}
+      >
+        {visible2 ? '회원 수정 완료' : '회원 수정'}
+      </button>
+      {visible && <MemberInsert onInsert={onInsert} />}
+      {visible2 && <MemberUpdate pickMember={pickMember} onUpate={onUpdate} />}
+
+      <MemberList
+        members={members}
+        onGetMember={onGetMember}
+        onRemove={onRemove}
+      />
     </MemberTemplate>
   );
 };
