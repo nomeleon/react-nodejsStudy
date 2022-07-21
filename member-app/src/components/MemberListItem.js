@@ -6,7 +6,7 @@ import {
   MdRemoveCircleOutline,
 } from 'react-icons/md';
 import cn from 'classnames';
-import './TodoListItem.scss';
+import './MemberListItem.scss';
 
 // const TodoListItem = () => {
 //   return (
@@ -23,7 +23,7 @@ import './TodoListItem.scss';
 // };
 //////////////////////////////////////////////////
 // const TodoListItem = ({ member, onRemove, onToggle }) => {
-const TodoListItem = ({ member, onRemove }) => {
+const MemberListItem = ({ member, onRemove }) => {
   const { no, id, pw, email, gender } = member;
 
   return (
@@ -31,9 +31,20 @@ const TodoListItem = ({ member, onRemove }) => {
       {/* <div className={cn('checkbox', { checked })} onClick={() => onToggle(id)}>
         {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />} */}
       <div className="text">
-        {member.id}, {member.pw}, {member.email}, {member.gender}
+        회원 {member.no} 정보
+        <br />
+        id : {member.id}
+        <br />
+        pw : {member.pw}
+        <br />
+        email : {member.email}
+        <br />
+        gender : {member.gender}
       </div>
       {/* </div> */}
+      <div className="update" onClick={() => onUpdate(no)}>
+        수정
+      </div>
       <div className="remove" onClick={() => onRemove(no)}>
         <MdRemoveCircleOutline />
       </div>
@@ -41,4 +52,4 @@ const TodoListItem = ({ member, onRemove }) => {
   );
 };
 
-export default TodoListItem;
+export default MemberListItem;

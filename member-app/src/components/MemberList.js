@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
-import TodoListItem from './TodoListItem';
-import './TodoList.scss';
+import MemberListItem from './MemberListItem';
+import './MemberList.scss';
 
 // const TodoList = () => {
 //   return (
@@ -14,13 +14,14 @@ import './TodoList.scss';
 // };
 ///////////////////////////////////////////////////////
 // const TodoList = ({ todos, onRemove, onToggle }) => {
-const TodoList = ({ members, onRemove }) => {
+const MemberList = ({ members, onUpdate, onRemove }) => {
   return (
     <div className="TodoList">
       {members.map((member) => (
-        <TodoListItem
+        <MemberListItem
           member={member}
           key={member.no}
+          onUpdate={onUpdate}
           onRemove={onRemove}
           // onToggle={onToggle}
         />
@@ -29,4 +30,4 @@ const TodoList = ({ members, onRemove }) => {
   );
 };
 
-export default TodoList;
+export default MemberList;

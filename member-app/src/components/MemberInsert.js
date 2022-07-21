@@ -1,32 +1,29 @@
 /* eslint-disable */
 import React, { useState, useCallback } from 'react';
 import { MdAdd } from 'react-icons/md';
-import './TodoInsert.scss';
+import './MemberInsert.scss';
 
 const init_form = {
-  no: 0,
   id: '',
   pw: '',
   email: '',
   gender: '',
 };
 
-const TodoInsert = ({ onInsert }) => {
+const MemberInsert = ({ onInsert }) => {
   const [form, setForm] = useState(init_form);
-  const { no, id, pw, email, gender } = form;
+  const { id, pw, email, gender } = form;
 
-  const onChange = useCallback((e) => {
+  const onChange = (e) => {
     const nextFrom = {
       ...form,
-      [e.target.name]: e.target.defaultValue,
+      [e.target.name]: e.target.value,
     };
     setForm(nextFrom);
-    console.log(form);
-  }, []);
+  };
 
   const onSubmit = useCallback(
     (e) => {
-      console.log(form);
       onInsert(form);
       setForm(init_form); // value 값 초기화
 
@@ -40,35 +37,38 @@ const TodoInsert = ({ onInsert }) => {
   return (
     <form onSubmit={onSubmit}>
       <div className="TodoInsert">
-        <input type={'hidden'} name="no" defaultValue={no} />
         <input
+          type="text"
           placeholder="아이디를 입력하세요"
           name="id"
-          defaultValue={id}
+          value={id}
           onChange={onChange}
         />
       </div>
       <div className="TodoInsert">
         <input
+          type="text"
           placeholder="비밀번호를 입력하세요"
           name="pw"
-          defaultValue={pw}
+          value={pw}
           onChange={onChange}
         />
       </div>
       <div className="TodoInsert">
         <input
+          type="text"
           placeholder="이메일을 입력하세요"
           name="email"
-          defaultValue={email}
+          value={email}
           onChange={onChange}
         />
       </div>
       <div className="TodoInsert">
         <input
+          type="text"
           placeholder="성별을 입력하세요"
           name="gender"
-          defaultValue={gender}
+          value={gender}
           onChange={onChange}
         />
       </div>
@@ -115,4 +115,4 @@ const TodoInsert = ({ onInsert }) => {
 //   );
 // };
 
-export default TodoInsert;
+export default MemberInsert;

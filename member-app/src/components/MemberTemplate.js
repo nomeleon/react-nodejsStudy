@@ -1,7 +1,7 @@
 import React from 'react';
-import './TodoTemplate.scss';
+import './MemberTemplate.scss';
 
-const TodoTemplate = ({ children }) => {
+const MemberTemplate = ({ children }) => {
   return (
     <div className="TodoTemplate">
       <div className="app-title">회원 관리</div>
@@ -10,4 +10,4 @@ const TodoTemplate = ({ children }) => {
   );
 };
 
-export default TodoTemplate;
+export default MemberTemplate;

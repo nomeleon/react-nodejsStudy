@@ -2,9 +2,9 @@
 //yarn add sass classnames react-icons
 import logo from './logo.svg';
 import './App.css';
-import TodoTemplate from './components/TodoTemplate';
-import TodoInsert from './components/TodoInsert';
-import TodoList from './components/TodoList';
+import MemberTemplate from './components/MemberTemplate';
+import MemberInsert from './components/MemberInsert';
+import MemberList from './components/MemberList';
 import { useCallback, useRef, useState } from 'react';
 
 const App = () => {
@@ -29,6 +29,7 @@ const App = () => {
         email: form.email,
         gender: form.gender,
       };
+      console.log(member);
       setMembers(members.concat(member));
       nextNo.current += 1;
     },
@@ -37,17 +38,22 @@ const App = () => {
 
   const onRemove = useCallback(
     (no) => {
-      //선택한 id와 동일하지 않은 요소만 반환
       setMembers(members.filter((member) => member.no !== no));
+    },
+    [members],
+  );
+  const onUpdate = useCallback(
+    (no) => {
+      //선택한 번호의 회원 정보를 input에 띄워줌 > 수정한 정보로 저장
     },
     [members],
   );
 
   return (
-    <TodoTemplate>
-      <TodoInsert onInsert={onInsert} />
-      <TodoList members={members} onRemove={onRemove} />
-    </TodoTemplate>
+    <MemberTemplate>
+      <MemberInsert onInsert={onInsert} />
+      <MemberList members={members} onUpdate={onUpdate} onRemove={onRemove} />
+    </MemberTemplate>
   );
 };
 
