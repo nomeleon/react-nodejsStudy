@@ -14,6 +14,11 @@ const App = () => {
   // input 수정을 위한 함수
   const onChange = useCallback((e) => {
     const { name, value } = e.target;
+    // setForm(
+    //   produce(form, (draft) => {
+    //     draft[name] = value;
+    //   })
+    // );
     setForm(
       produce((draft) => {
         draft[name] = value;
@@ -32,6 +37,11 @@ const App = () => {
       };
 
       // array 에 새 항목 등록
+      // setData(
+      //   produce(data,(aaa) => {
+      //     aaa.array.push(info);
+      //   })
+      // );
       setData(
         produce((draft) => {
           draft.array.push(info);
@@ -50,6 +60,14 @@ const App = () => {
 
   // 항목을 삭제하는 함수
   const onRemove = useCallback((id) => {
+    // setData(
+    //   produce(data,(draft) => {
+    //     draft.array.splice(
+    //       draft.array.findIndex((info) => info.id === id),
+    //       1
+    //     );
+    //   })
+    // );
     setData(
       produce((draft) => {
         draft.array.splice(
