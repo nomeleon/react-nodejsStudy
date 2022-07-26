@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script>
+        const promise1 = new Promise((resolve, reject) => {
+            resolve(); //then() 메서드 실행
+            //reject(); //catch() 메서드 실행
+        })
+
+        promise1
+            .then(() => {//성공
+                console.log("then!")
+            })
+            .catch(() => {//오류
+                console.log("catch!")
+            })
+    </script> -->
+    <!-- <script>
+        function increase(number) {
+            const promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const result = number + 10;
+                    if(result >50){
+                        const e = new Error('number too big')
+                        return reject(e)
+                    }
+                    resolve(result);
+
+                },1000);
+            })
+            return promise;
+        }
+        increase(0)
+        .then(number => {
+            console.log(number);
+            return increase(number);
+        })
+        .then(number => {
+            console.log(number);
+            return increase(number);
+        })
+        .then(number => {
+            console.log(number);
+            return increase(number);
+        })
+        .then(number => {
+            console.log(number);
+            return increase(number);
+        })
+        .then(number => {
+            console.log(number);
+            return increase(number);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+    </script> -->
+    <!-- <script>
+        async function f() {
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => resolve("완료!"),1000)
+            });
+
+            let result = await promise;//promise가 이행될때까지 기다림
+
+            alert(result);
+        }
+        f();
+    </script> -->
+    <script>
+        function increase(number) {
+            const promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const result = number + 10;
+                    if(result >50){
+                        const e = new Error('number too big')
+                        return reject(e)
+                    }
+                    resolve(result);
+
+                },1000);
+            })
+            return promise;
+        }
+
+        async function runTask(){
+            try{
+                let result = await increase(0);
+                console.log(result)
+                result = await increase(result)
+                console.log(result)
+                result = await increase(result)
+                console.log(result)
+                result = await increase(result)
+                console.log(result)
+                result = await increase(result)
+                console.log(result)
+                result = await increase(result)
+                console.log(result)
+            }catch(e){
+                console.log(e)
+            }
+        }
+        runTask();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
