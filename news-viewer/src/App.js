@@ -7,6 +7,8 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import NewsList from './components/NewsList';
 import Categories from './components/Categories';
+import NewsPage from './pages/NewsPage';
+import { Route, Routes } from '../node_modules/react-router-dom/index';
 
 // const App = () => {
 //   const [data, setData] = useState(null);
@@ -41,16 +43,24 @@ import Categories from './components/Categories';
 //   );
 // };
 
-const App = () => {
-  const [category, setCategory] = useState('all');
-  const onSelect = useCallback((category) => setCategory(category), []);
+// const App = () => {
+//   const [category, setCategory] = useState('all');
+//   const onSelect = useCallback((category) => setCategory(category), []);
 
+//   return (
+//     <>
+//       <Categories category={category} onSelect={onSelect} />
+//       <NewsList category={category} />
+//     </>
+//   );
+// };
+
+const App = () => {
   return (
-    <>
-      <Categories category={category} onSelect={onSelect} />
-      <NewsList category={category} />
-    </>
+    <Routes>
+      <Route path="/" element={<NewsPage />} />
+      <Route path="/:category" element={<NewsPage />} />
+    </Routes>
   );
 };
-
 export default App;
