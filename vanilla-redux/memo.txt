@@ -1,0 +1,5 @@
+npm install -g parcel-bundler (-g : global)
+mkdir 폴더명 : 폴더명으로 폴더 생성
+yarn init -y : package.json 파일추가
+parcel index.html : 실행
+yarn add redux = npm install redux
