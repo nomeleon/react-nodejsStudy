@@ -32,6 +32,9 @@ const EncycList = () => {
   const [loading, setLoading] = useState(false);
   const [inputSearch, setInputSearch] = useState('안녕');
   const [displayNum, setDisplayNum] = useState(10);
+  const [optionNum, setOptionNum] = useState([
+    10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
+  ]);
 
   const NAVER_CLIENT_ID = 'ir3vWsGnql5HVjuMKodQ';
   const NAVER_CLIENT_SECRET = '9xYnqTe25x';
@@ -42,8 +45,8 @@ const EncycList = () => {
 
   const onChange2 = async (e) => {
     setDisplayNum(e.target.value);
-    console.log(displayNum);
-    setLoading(true);
+    // console.log(displayNum);
+    // setLoading(true);
     try {
       const response = await axios.get('/v1/search/encyc', {
         params: {
@@ -60,7 +63,7 @@ const EncycList = () => {
     } catch (e) {
       console.log(e);
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   const onClick = async () => {
@@ -146,6 +149,25 @@ const EncycList = () => {
             inputSearch == '안녕' ? '검색어를 입력하세요' : inputSearch
           }
         />
+        <select
+          onChange={onChange2}
+          style={{
+            width: '100px',
+            height: '50px',
+            backgroundColor: '#F0F0F0',
+            border: '0',
+            borderRadius: '15px',
+            marginLeft: '5px',
+          }}
+        >
+          {optionNum.map(function (option) {
+            return (
+              <option value={option}>
+                {option === 10 ? '10 (기본)' : option}
+              </option>
+            );
+          })}
+        </select>
         <button
           onClick={onClick}
           style={{
@@ -159,18 +181,6 @@ const EncycList = () => {
         >
           SEARCH
         </button>
-        <select onChange={onChange2}>
-          <option value={10}>10(기본)</option>
-          <option value={20}>20</option>
-          <option value={30}>30</option>
-          <option value={40}>40</option>
-          <option value={50}>50</option>
-          <option value={60}>60</option>
-          <option value={70}>70</option>
-          <option value={80}>80</option>
-          <option value={90}>90</option>
-          <option value={100}>100</option>
-        </select>
       </EncycHeader>
 
       <EncycListBlock>
