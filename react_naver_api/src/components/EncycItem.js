@@ -47,6 +47,7 @@ const EncycItemBlock = styled.div`
 const EncycItem = ({ item }) => {
   const { title, description, link, thumbnail } = item;
   const title_result = title.replace(/<[^>]*>?/g, '');
+  const description_result = description.replace(/<[^>]*>?/g, '');
 
   return (
     <EncycItemBlock style={{ borderBottom: '1px solid #eeeeee' }}>
@@ -60,7 +61,7 @@ const EncycItem = ({ item }) => {
 
       <div className="contents">
         <h3 style={{ marginTop: 'auto' }}>{title_result}</h3>
-        <p>{description}</p>
+        <p>{description_result}</p>
         <p style={{ textAlign: 'right', marginBottom: '10px' }}>
           <a
             href={link}

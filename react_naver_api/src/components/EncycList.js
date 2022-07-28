@@ -43,47 +43,16 @@ const EncycList = () => {
     setInputSearch(e.target.value);
   };
 
-  const onChange2 = async (e) => {
+  const onClick_select = (e) => {
     setDisplayNum(e.target.value);
     // console.log(displayNum);
-    // setLoading(true);
-    try {
-      const response = await axios.get('/v1/search/encyc', {
-        params: {
-          query: inputSearch, // 이미지 검색 텍스트
-          start: 1, // 검색 시작 위치
-          display: displayNum, // 검색된 검색 결과의 개수
-        },
-        headers: {
-          'X-NAVER-Client-Id': NAVER_CLIENT_ID,
-          'X-NAVER-Client-Secret': NAVER_CLIENT_SECRET,
-        },
-      });
-      setItems(response.data.items);
-    } catch (e) {
-      console.log(e);
-    }
-    // setLoading(false);
+
+    get_api();
   };
 
-  const onClick = async () => {
+  const onClick = () => {
     setLoading(true);
-    try {
-      const response = await axios.get('/v1/search/encyc', {
-        params: {
-          query: inputSearch, // 이미지 검색 텍스트
-          start: 1, // 검색 시작 위치
-          display: displayNum, // 검색된 검색 결과의 개수
-        },
-        headers: {
-          'X-NAVER-Client-Id': NAVER_CLIENT_ID,
-          'X-NAVER-Client-Secret': NAVER_CLIENT_SECRET,
-        },
-      });
-      setItems(response.data.items);
-    } catch (e) {
-      console.log(e);
-    }
+    get_api();
     setLoading(false);
   };
 
@@ -93,26 +62,30 @@ const EncycList = () => {
     }
   };
 
+  const get_api = async () => {
+    try {
+      const response = await axios.get('/v1/search/encyc', {
+        params: {
+          query: inputSearch, // 이미지 검색 텍스트
+          start: 1, // 검색 시작 위치
+          display: displayNum, // 검색된 검색 결과의 개수
+        },
+        headers: {
+          'X-NAVER-Client-Id': NAVER_CLIENT_ID,
+          'X-NAVER-Client-Secret': NAVER_CLIENT_SECRET,
+        },
+      });
+      setItems(response.data.items);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     //async 를 사용하는 함수 따로 선언
     const fetchData = async () => {
       setLoading(true);
-      try {
-        const response = await axios.get('/v1/search/encyc', {
-          params: {
-            query: inputSearch, // 이미지 검색 텍스트
-            start: 1, // 검색 시작 위치
-            display: 10, // 가져올 이미지 갯수
-          },
-          headers: {
-            'X-NAVER-Client-Id': NAVER_CLIENT_ID,
-            'X-NAVER-Client-Secret': NAVER_CLIENT_SECRET,
-          },
-        });
-        setItems(response.data.items);
-      } catch (e) {
-        console.log(e);
-      }
+      get_api();
       setLoading(false);
     };
     fetchData();
@@ -130,7 +103,7 @@ const EncycList = () => {
   return (
     <>
       <EncycHeader>
-        <h2>My Direct Encyclopedia</h2>
+        <h2>My Pocket Encyclopedia</h2>
 
         <input
           name="input_search"
@@ -150,7 +123,7 @@ const EncycList = () => {
           }
         />
         <select
-          onChange={onChange2}
+          onClick={onClick_select}
           style={{
             width: '100px',
             height: '50px',
@@ -162,7 +135,7 @@ const EncycList = () => {
         >
           {optionNum.map(function (option) {
             return (
-              <option value={option}>
+              <option key={option} value={option}>
                 {option === 10 ? '10 (기본)' : option}
               </option>
             );
