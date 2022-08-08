@@ -5,13 +5,13 @@ import axios from 'axios';
 import EncycList from './components/EncycList';
 import { Routes, Route, Router } from '../node_modules/react-router-dom/index';
 
-// const App = () => {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<EncycList />} />
-//     </Routes>
-//   );
-// };
+const App = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<EncycList />} />
+    </Routes>
+  );
+};
 // const App = () => {
 //   const [data, setData] = useState(null);
 
@@ -63,39 +63,5 @@ import { Routes, Route, Router } from '../node_modules/react-router-dom/index';
 //   );
 // };
 // "proxy": "https://openapi.naver.com",
-
-const App = () => {
-  const [data, setData] = useState(null);
-
-  const onClick = () => {
-    axios
-      .get('/rest/KorService/areaCode', {
-        params: {
-          ServiceKey:
-            'RaKTB3hA3JRDxMNjDRqbIzY2NLn6oWp1zEe4yrO8cK3m2CZiUntJX%2BAInm6OyIP4ggjwmDe0%2FOMTbC4lJcHaXQ%3D%3D', // 공공데이터포털에서 발급받은 인증키
-          MobileOS: 1, // IOS (아이폰), AND (안드로이드), WIN (원도우폰), ETC
-          MobileApp: 5, // 	서비스명=어플명
-        },
-      })
-      .then((response) => {
-        setData(response.data);
-      });
-  };
-  return (
-    <div>
-      <div>
-        <button onClick={onClick}>불러오기</button>
-      </div>
-
-      {data && (
-        <textarea
-          rows={7}
-          value={JSON.stringify(data, null, 2)}
-          readOnly={true}
-        />
-      )}
-    </div>
-  );
-};
 
 export default App;
