@@ -40,8 +40,15 @@ app.get("/list", (req, res) => {
   });
 });
 
-// app.post("/insert", (req, res) => {
-//   console.log("/insert", req.body);
-//   var writer = req.body.writer;
-//   var title = req.body.title;
-// });
+app.post("/insert", (req, res) => {
+  console.log("/insert", req.body);
+  var writer = req.body.writer;
+  var title = req.body.title;
+  var content = req.body.content;
+
+  const sqlQuery =
+    "insert into board_tbl(board_writer, board_title, board_content) values(?,?,?);";
+  db.query(sqlQuery, [writer, title, content], (err, result) => {
+    res.send(result);
+  });
+});
