@@ -27,14 +27,10 @@ const db = mysql.createPool({
   database: "bbs",
 });
 
-app.listen(PORT, () => {
-  console.log(`running on port ${PORT}`);
-});
-
 app.get("/list", (req, res) => {
   console.log("list!!");
   const sqlQuery =
-    "select borad_num, board_writer, board_content, date_format(board_date, '%Y-%m-%d' as board_date from board_tbl;";
+    "select board_num, board_title, board_writer, board_content, date_format(board_date, '%Y-%m-%d') as board_date from board_tbl;";
   db.query(sqlQuery, (err, result) => {
     res.send(result);
   });
@@ -51,4 +47,44 @@ app.post("/insert", (req, res) => {
   db.query(sqlQuery, [writer, title, content], (err, result) => {
     res.send(result);
   });
+});
+
+app.post("/detail", (req, res) => {
+  console.log("/detail", req.body);
+  var num = parseInt(req.body.num);
+
+  const sqlQuery =
+    "select board_num, board_writer, board_title, board_content, date_format(board_date, '%Y-%m-%d') as board_date from board_tbl where board_num=?;";
+  db.query(sqlQuery, [num], (err, result) => {
+    res.send(result);
+  });
+});
+
+app.post("/update", (req, res) => {
+  console.log("/update", req.body);
+  var title = req.body.article.board_title;
+  var content = req.body.article.board_content;
+  var num = req.body.article.board_num;
+
+  const sqlQuery =
+    "update board_tbl set board_title=?, board_content=?, board_date=now() where board_num=?;";
+  db.query(sqlQuery, [title, content, num], (err, result) => {
+    res.send(result);
+    console.log("result= ", result);
+  });
+});
+
+app.post("/delete", (req, res) => {
+  const num = req.body.num;
+  console.log("/delete(id) =>", num);
+
+  const sqlQuery = "delete from board_tbl where board_num=?;";
+  db.query(sqlQuery, [num], (err, result) => {
+    console.log(err);
+    res.send(result);
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`running on port ${PORT}`);
 });

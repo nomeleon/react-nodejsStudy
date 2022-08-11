@@ -8,7 +8,7 @@ import axios from "../node_modules/axios/index";
 
 function App() {
   const [boardlist, setBoardlist] = useState({
-    boardlist: [],
+    boardList: [],
   });
 
   const [article, setArticle] = useState({
@@ -16,32 +16,35 @@ function App() {
     board_writer: "",
     board_title: "",
     board_content: "",
-    boarrd_date: "",
+    board_date: "",
   });
 
-  //0:글쓰기,  1:상세보기, 2:글수정
+  // 0:글쓰기,  1:상세보기, 2:글수정
   const [actionMode, setActionMode] = useState({ mode: 0 });
 
   //글목록
   const getList = () => {
-    axios.get("http://localhost:8008/list", {}).then((res) => {
-      const { data } = res;
-      console.log("data ==>", data);
-      setBoardlist({
-        boardlist: data,
-      });
-      setActionMode({
-        ...actionMode,
-        mode: 0, //상세보기
-      }).catch((e) => {
+    axios
+      .get("http://localhost:8008/list", {})
+      .then((res) => {
+        const { data } = res;
+        console.log("data ==>", data);
+        setBoardlist({
+          boardList: data,
+        });
+        setActionMode({
+          ...actionMode,
+          mode: 0,
+        });
+      })
+      .catch((e) => {
         console.error(e);
       });
-    });
   };
 
   //상세보기
   const handleDetail = (e) => {
-    alert("handleDetail(actionMode) =>", actionMode.mode);
+    // alert("handleDetail(actionMode) =>", actionMode.mode);
     axios
       .post("http://localhost:8008/detail", { num: e.target.id })
       .then((res) => {

@@ -1,4 +1,12 @@
-const BoardUpdateForm = () => {
+const BoardUpdateForm = ({ article, setarticle, handleupdate }) => {
+  console.log("BoardUpdateForm =>", article);
+
+  const onChange = (e) => {
+    setarticle({
+      ...article,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div>
       <form>
@@ -8,15 +16,16 @@ const BoardUpdateForm = () => {
             <td align="left" width="600px">
               <input
                 type="text"
-                name="border_title"
-                defaultValue="border_title"
+                name="board_title"
+                defaultValue={article.board_title}
+                onChange={onChange}
               ></input>
             </td>
           </tr>
           <tr>
             <td wiidth="100px">글쓴이</td>
             <td align="left" width="600px">
-              arctcle.board_writer
+              {article.board_writer}
             </td>
           </tr>
 
@@ -25,14 +34,19 @@ const BoardUpdateForm = () => {
             <td align="left" width="600px">
               <input
                 type="text"
-                name="border_content"
-                defaultValue="border_content"
+                name="board_content"
+                defaultValue={article.board_content}
+                onChange={onChange}
               ></input>
             </td>
           </tr>
           <tr>
             <td colSpan="2" align="center">
-              <input type="button" value="글수정"></input>
+              <input
+                type="button"
+                value="글수정"
+                onClick={handleupdate}
+              ></input>
             </td>
           </tr>
         </table>

@@ -1,8 +1,18 @@
 import { useEffect } from "react";
 import BoardArticle from "./BoardArticle";
 
-const BoradList = () => {
-  if (1) {
+const BoradList = ({
+  boardlist,
+  actionmode,
+  handlelist,
+  handledetail,
+  handleupdateform,
+}) => {
+  useEffect(() => {
+    handlelist();
+  }, []);
+
+  if (boardlist.boardList.length === 0) {
     return (
       <div>
         <table width="700px" border="1" align="center">
@@ -32,7 +42,18 @@ const BoradList = () => {
             </tr>
           </thead>
           <tbody>
-            <BoardArticle />
+            {boardlist.boardList.map((article) => {
+              return (
+                <BoardArticle
+                  actionmode={actionmode}
+                  article={article}
+                  key={article.board_num}
+                  handlelist={handlelist}
+                  handledetail={handledetail}
+                  handleupdateform={handleupdateform}
+                />
+              );
+            })}
           </tbody>
         </table>
       </div>
