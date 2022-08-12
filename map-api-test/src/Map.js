@@ -6,6 +6,9 @@ const { kakao } = window;
 
 const Map = () => {
   useEffect(() => {
+    // 마커를 담을 배열입니다
+    var markers = [];
+
     var container = document.getElementById("map");
     var options = {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -13,12 +16,12 @@ const Map = () => {
     };
 
     var map = new kakao.maps.Map(container, options);
-    //마커표시
-    var markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-    var marker = new kakao.maps.Marker({
-      position: markerPosition,
-    });
-    marker.setMap(map);
+    // //마커표시
+    // var markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+    // var marker = new kakao.maps.Marker({
+    //   position: markerPosition,
+    // });
+    // marker.setMap(map);
 
     // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
     var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -30,6 +33,8 @@ const Map = () => {
     // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    //검색 후 목록 표시
 
     // console.log("loading kakaomap");
   }, []);
