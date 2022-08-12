@@ -26,7 +26,7 @@ const db = mysql.createPool({
   password: "123456",
   database: "bbs",
 });
-
+//로그인
 app.post("/login", (req, res) => {
   console.log("/login", req.body);
   var id = req.body.id;
@@ -42,7 +42,7 @@ app.post("/login", (req, res) => {
     // }
   });
 });
-
+//회원등록
 app.post("/member", (req, res) => {
   console.log("/member", req.body);
   var id = req.body.id;
@@ -54,16 +54,35 @@ app.post("/member", (req, res) => {
     res.send(result);
   });
 });
+//게시판 리스트
+app.post("/list", (req, res) => {
+  var page_num = parseInt(req.body.page_num);
+  var page_size = parseInt(req.body.page_size);
+  console.log("list!!(page_num, page_size) =>", page_num, ", ", page_size);
 
-app.get("/list", (req, res) => {
-  console.log("list!!");
+  const start_limit = (page_num - 1) * page_size;
+  console.log(
+    "list!!(start_limit, page_size) =>",
+    start_limit,
+    ", ",
+    page_size
+  );
+
   const sqlQuery =
-    "select board_num, board_title, board_writer, board_content, date_format(board_date, '%Y-%m-%d') as board_date from board_tbl;";
+    "select board_num, board_title, board_writer, board_content, date_format(board_date, '%Y-%m-%d') as board_date from board_tbl order by board_num desc limit ?,?;";
+  db.query(sqlQuery, [start_limit, page_size], (err, result) => {
+    res.send(result);
+  });
+});
+//글의 개수 count
+app.get("/count", (req, res) => {
+  console.log("/count");
+  const sqlQuery = "select count(*) as count from board_tbl;";
   db.query(sqlQuery, (err, result) => {
     res.send(result);
   });
 });
-
+//글쓰기
 app.post("/insert", (req, res) => {
   console.log("/insert", req.body);
   var writer = req.body.writer;
@@ -76,7 +95,7 @@ app.post("/insert", (req, res) => {
     res.send(result);
   });
 });
-
+//상세보기
 app.post("/detail", (req, res) => {
   console.log("/detail", req.body);
   var num = parseInt(req.body.num);
@@ -87,7 +106,7 @@ app.post("/detail", (req, res) => {
     res.send(result);
   });
 });
-
+//글수정
 app.post("/update", (req, res) => {
   console.log("/update", req.body);
   var title = req.body.article.board_title;
@@ -101,7 +120,7 @@ app.post("/update", (req, res) => {
     console.log("result= ", result);
   });
 });
-
+//글삭제
 app.post("/delete", (req, res) => {
   const num = req.body.num;
   console.log("/delete(id) =>", num);

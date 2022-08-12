@@ -34,6 +34,11 @@ const MemberFrom = () => {
       })
       .then((res) => {
         console.log("handleMember =>", res);
+        if (res.data.affectedRows === 1) {
+          alert("회원등록 성공!");
+        } else {
+          alert("회원가입 실패");
+        }
         navigate("/");
       })
       .catch((e) => {

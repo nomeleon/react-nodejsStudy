@@ -1,15 +1,18 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BoardWrite from "./BoradWrite";
 import BoradList from "./BoardList";
 import BoardDetail from "./BoardDetail";
 import BoardUpdateForm from "./BoardUpdateForm";
 import axios from "../node_modules/axios/index";
+import { useNavigate } from "../node_modules/react-router-dom/index";
 
 function Main() {
   const [boardlist, setBoardlist] = useState({
     boardList: [],
   });
+
+  const navigate = useNavigate();
 
   const [article, setArticle] = useState({
     board_num: 0,
@@ -21,11 +24,51 @@ function Main() {
 
   // 0:글쓰기,  1:상세보기, 2:글수정
   const [actionMode, setActionMode] = useState({ mode: 0 });
+  const [pageLink, setPageLink] = useState([]);
+
+  var page_num = 1;
+  const page_size = 3;
+  var page_count = 1;
+  var article_count = 0;
+
+  useEffect(() => {
+    const login_id = window.sessionStorage.getItem("id");
+    console.log("window.sessionStorage(login_id) =>", login_id);
+    if (login_id === null) {
+      alert("로그인 후 사용 가능합니다.");
+      navigate("/");
+    }
+  }, []);
+
+  const handlePage = (e) => {
+    page_num = e.target.id;
+    getList();
+  };
 
   //글목록
-  const getList = () => {
-    axios
-      .get("http://localhost:8008/list", {})
+  async function getList() {
+    await axios
+      .get("http://localhost:8008/count", {})
+      .then((res) => {
+        const { data } = res;
+        article_count = data[0].count;
+        page_count = Math.ceil(article_count / page_size);
+        var page_link = [];
+        for (let i = 1; i <= page_count; i++) {
+          page_link.push(i);
+        }
+        setPageLink(page_link);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+
+    await axios
+      .post("http://localhost:8008/list", {
+        page_num: page_num,
+        page_size: page_size,
+        article_count: article_count,
+      })
       .then((res) => {
         const { data } = res;
         console.log("data ==>", data);
@@ -40,7 +83,7 @@ function Main() {
       .catch((e) => {
         console.error(e);
       });
-  };
+  }
 
   //상세보기
   const handleDetail = (e) => {
@@ -127,6 +170,8 @@ function Main() {
           handlelist={getList}
           handledetail={handleDetail}
           handleupdateform={handleUpdateForm}
+          handlepage={handlePage}
+          pagelink={pageLink}
         ></BoradList>
       </div>
     );
@@ -140,6 +185,8 @@ function Main() {
           handlelist={getList}
           handledetail={handleDetail}
           handleupdateform={handleUpdateForm}
+          handlepage={handlePage}
+          pagelink={pageLink}
         ></BoradList>
       </div>
     );
@@ -157,6 +204,8 @@ function Main() {
           handlelist={getList}
           handledetail={handleDetail}
           handleupdateform={handleUpdateForm}
+          handlepage={handlePage}
+          pagelink={pageLink}
         ></BoradList>
       </div>
     );
