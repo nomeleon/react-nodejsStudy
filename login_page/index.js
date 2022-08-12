@@ -27,6 +27,34 @@ const db = mysql.createPool({
   database: "bbs",
 });
 
+app.post("/login", (req, res) => {
+  console.log("/login", req.body);
+  var id = req.body.id;
+  var pw = req.body.pw;
+
+  const sqlQuery = "select count(*) as 'cnt' from member where id=? and pw=?;";
+  db.query(sqlQuery, [id, pw], (err, result) => {
+    res.send(result);
+    // if (result[0].cnt === 1) {
+    //   res.send({ message: "success" });
+    // } else {
+    //   res.send({ message: "fail" });
+    // }
+  });
+});
+
+app.post("/member", (req, res) => {
+  console.log("/member", req.body);
+  var id = req.body.id;
+  var pw = req.body.pw;
+  var email = req.body.email;
+
+  const sqlQuery = "insert into member values(?,?,?);";
+  db.query(sqlQuery, [id, pw, email], (err, result) => {
+    res.send(result);
+  });
+});
+
 app.get("/list", (req, res) => {
   console.log("list!!");
   const sqlQuery =
