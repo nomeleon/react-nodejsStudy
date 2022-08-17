@@ -1,38 +1,51 @@
-const BoardUpdateForm = () => {
+const BoardUpdateForm = ({ article, setarticle, handleupdate }) => {
+  console.log("BoardUpdateForm =>", article);
+
+  const onChange = (e) => {
+    setarticle({
+      ...article,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div>
       <form>
         <table border="1" width="700px" align="center">
           <tr>
-            <td wiidth="100px">제목</td>
+            <td width="100px">제목</td>
             <td align="left" width="600px">
               <input
                 type="text"
-                name="border_title"
-                defaultValue="border_title"
+                name="board_title"
+                defaultValue={article.board_title}
+                onChange={onChange}
               ></input>
             </td>
           </tr>
           <tr>
-            <td wiidth="100px">글쓴이</td>
+            <td width="100px">글쓴이</td>
             <td align="left" width="600px">
-              arctcle.board_writer
+              {article.board_writer}
             </td>
           </tr>
-
           <tr>
-            <td wiidth="100px">내용</td>
+            <td width="100px">글내용</td>
             <td align="left" width="600px">
               <input
                 type="text"
-                name="border_content"
-                defaultValue="border_content"
+                name="board_content"
+                defaultValue={article.board_content}
+                onChange={onChange}
               ></input>
             </td>
           </tr>
           <tr>
-            <td colSpan="2" align="center">
-              <input type="button" value="글수정"></input>
+            <td colspan="2" align="center">
+              <input
+                type="button"
+                value="글수정"
+                onClick={handleupdate}
+              ></input>
             </td>
           </tr>
         </table>
