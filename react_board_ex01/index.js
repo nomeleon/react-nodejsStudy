@@ -4,7 +4,7 @@ const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const PORT = process.env.port || 8008;
 const cors = require("cors");
-//한글 디 iconv-lite
+//한글 디코딩 iconv-lite
 const iconv = require("iconv-lite");
 
 app.use(express.json());
