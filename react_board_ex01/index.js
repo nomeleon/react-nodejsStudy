@@ -4,6 +4,8 @@ const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const PORT = process.env.port || 8008;
 const cors = require("cors");
+//한글 디코딩 iconv-lite
+const iconv = require("iconv-lite");
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,7 +42,15 @@ const upload = multer({
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname);
-      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+      done(
+        null,
+        path.basename(
+          iconv.decode(file.originalname, "utf-8").toString(),
+          ext
+        ) +
+          Date.now() +
+          ext
+      );
     },
   }),
   limits: { fileSize: 10 * 1024 * 1024 },
